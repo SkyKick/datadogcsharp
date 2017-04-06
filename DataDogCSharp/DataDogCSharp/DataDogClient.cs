@@ -39,7 +39,13 @@ namespace DataDogCSharp
 
         }
 
-        private async Task<HttpResponseMessage> PostToDataDog(DataDogPayload payload)
+        public async Task<HttpResponseMessage> Gauge(string metric, IEnumerable<long> points, IEnumerable<string> tags)
+        {
+            var dataPoints = points.Select(p => new DataDogPoint(p));
+            return await Gauge(metric, dataPoints, tags);
+        }
+
+        public async Task<HttpResponseMessage> PostToDataDog(DataDogPayload payload)
         {
             var json = JsonConvert.SerializeObject(payload);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
