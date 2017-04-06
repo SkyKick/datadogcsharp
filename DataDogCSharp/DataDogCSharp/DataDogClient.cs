@@ -19,6 +19,17 @@ namespace DataDogCSharp
             apiUrl = $"{url}{apiKey}";
             httpClient = new HttpClient();
         }
+        public async Task<HttpResponseMessage> Gauge(string metric, long point, IEnumerable<string> tags)
+        {
+            var dataPoints = new List<DataDogPoint>() { new DataDogPoint(point) };
+            return await Gauge(metric, dataPoints, tags);
+        }
+
+        public async Task<HttpResponseMessage> Gauge(string metric, IEnumerable<long> points, IEnumerable<string> tags)
+        {
+            var dataPoints = points.Select(p => new DataDogPoint(p));
+            return await Gauge(metric, dataPoints, tags);
+        }
 
         public async Task<HttpResponseMessage> Gauge(string metric, IEnumerable<DataDogPoint> points, IEnumerable<string> tags)
         {
@@ -36,13 +47,6 @@ namespace DataDogCSharp
             };
 
             return await PostToDataDog(payload);
-
-        }
-
-        public async Task<HttpResponseMessage> Gauge(string metric, IEnumerable<long> points, IEnumerable<string> tags)
-        {
-            var dataPoints = points.Select(p => new DataDogPoint(p));
-            return await Gauge(metric, dataPoints, tags);
         }
 
         public async Task<HttpResponseMessage> PostToDataDog(DataDogPayload payload)
