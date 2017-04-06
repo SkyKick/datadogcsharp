@@ -1,4 +1,6 @@
-﻿using System;
+﻿using DataDogCSharp.Serializers;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,7 +10,13 @@ namespace DataDogCSharp.Models
 {
     public class DataDogPoint
     {
-        long posixTime;
-        long value;
+        public long PosixTime;
+        public long Value;
+
+        public DataDogPoint(long value)
+        {
+            PosixTime = DateTimeOffset.Now.ToUnixTimeSeconds();
+            this.Value = value;
+        }
     }
 }

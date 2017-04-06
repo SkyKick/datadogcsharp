@@ -20,19 +20,19 @@ namespace DataDogCSharp
             httpClient = new HttpClient();
         }
 
-        public async Task<HttpResponseMessage> Gauge(string metric, IEnumerable<long[]> points, IEnumerable<string> tags)
+        public async Task<HttpResponseMessage> Gauge(string metric, IEnumerable<DataDogPoint> points, IEnumerable<string> tags)
         {
             DataDogMetric dataMetric = new DataDogMetric()
             {
-                metric = metric,
-                points = points,
-                tags = tags,
-                type = "gauge"
+                Metric = metric,
+                Points = points,
+                Tags = tags,
+                Type = "gauge"
             };
 
             DataDogPayload payload = new DataDogPayload()
             {
-                series = new List<DataDogMetric>() { dataMetric }
+                Series = new List<DataDogMetric>() { dataMetric }
             };
 
             return await PostToDataDog(payload);

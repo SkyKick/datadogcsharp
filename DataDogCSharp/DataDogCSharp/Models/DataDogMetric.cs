@@ -8,9 +8,10 @@ namespace DataDogCSharp.Models
 {
     public class DataDogMetric
     {
-        public string metric;
-        public IEnumerable<long[]> points;
-        public string type;
-        public IEnumerable<string> tags;
+        public string Metric;
+        public IEnumerable<DataDogPoint> Points;
+        public string Type;
+        public IEnumerable<string> Tags;
+        public string Host;
     }
 }
