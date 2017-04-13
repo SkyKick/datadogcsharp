@@ -11,9 +11,14 @@ namespace DataDogCSharp.Models
     public class DataDogPoint
     {
         public long PosixTime;
-        public long Value;
+        public double Value;
 
-        public DataDogPoint(long value)
+        public DataDogPoint(double value)
+        {
+            PosixTime = DateTimeOffset.Now.ToUnixTimeSeconds();
+            this.Value = value;
+        }
+        public DataDogPoint(long time, double value)
         {
             PosixTime = DateTimeOffset.Now.ToUnixTimeSeconds();
             this.Value = value;
