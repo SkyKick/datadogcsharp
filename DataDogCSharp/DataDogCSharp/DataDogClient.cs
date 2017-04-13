@@ -19,13 +19,13 @@ namespace DataDogCSharp
             apiUrl = $"{url}{apiKey}";
             httpClient = new HttpClient();
         }
-        public async Task<HttpResponseMessage> Gauge(string metric, long point, IEnumerable<string> tags)
+        public async Task<HttpResponseMessage> Gauge(string metric, double point, IEnumerable<string> tags)
         {
             var dataPoints = new List<DataDogPoint>() { new DataDogPoint(point) };
             return await Gauge(metric, dataPoints, tags);
         }
 
-        public async Task<HttpResponseMessage> Gauge(string metric, IEnumerable<long> points, IEnumerable<string> tags)
+        public async Task<HttpResponseMessage> Gauge(string metric, IEnumerable<double> points, IEnumerable<string> tags)
         {
             var dataPoints = points.Select(p => new DataDogPoint(p));
             return await Gauge(metric, dataPoints, tags);
