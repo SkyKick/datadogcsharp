@@ -21,7 +21,7 @@ namespace DataDogCSharp.Models
 
         public DataDogPoint(long time, double value)
         {
-            PosixTime = DateTimeOffset.Now.ToUnixTimeSeconds();
+            PosixTime = time;
             this.Value = value;
         }
     }
