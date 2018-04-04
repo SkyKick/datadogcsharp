@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
+  <metadata>
+    <id>DataDogCSharp</id>
+    <version>$version$</version>
+    <authors>Jared Lutteke</authors>
+    <owners>SkyKick</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <licenseUrl>https://github.com/SkyKick/datadogcsharp/blob/feature/implement-client/LICENSE.md/</licenseUrl>
+    <projectUrl>https://github.com/SkyKick/datadogcsharp/tree/feature/implement-client/</projectUrl>
+    <iconUrl>https://www.skykick.com/svg/logo.svg</iconUrl>
+    <description>C# Library for interacting with DataDog's API</description>
+    <releaseNotes>Initial implementation.</releaseNotes>
+    <copyright>Copyright 2017</copyright>
+    <dependencies>
+      <dependency id="Newtonsoft.Json" version="10.0.2" />
+    </dependencies>
+  </metadata>
+</package>

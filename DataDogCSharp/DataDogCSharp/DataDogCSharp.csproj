@@ -52,6 +52,7 @@
     <Compile Include="Serializers\DataDogPayloadSerializer.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="DataDogCSharp.nuspec" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
