@@ -8,19 +8,27 @@ using System.Threading.Tasks;
 
 namespace DataDogCSharp
 {
-    public class DataDogClient
+    public interface IDataDogClient
     {
-        private string apiUrl;
-        private HttpClient httpClient;
+        Task<HttpResponseMessage> Gauge(string metric, double point, IEnumerable<string> tags);
+        Task<HttpResponseMessage> Gauge(string metric, IEnumerable<double> points, IEnumerable<string> tags);
+        Task<HttpResponseMessage> Gauge(string metric, IEnumerable<DataDogPoint> points, IEnumerable<string> tags);
+        Task<HttpResponseMessage> PostToDataDog(DataDogPayload payload);
+    }
+
+    public class DataDogClient : IDataDogClient
+    {
+        private readonly string _apiUrl;
+        private readonly HttpClient _httpClient;
 
         public DataDogClient(string apiKey, string url = "https://app.datadoghq.com/api/v1/series?api_key=")
         {
-            apiUrl = $"{url}{apiKey}";
-            httpClient = new HttpClient();
+            _apiUrl = $"{url}{apiKey}";
+            _httpClient = new HttpClient();
         }
         public async Task<HttpResponseMessage> Gauge(string metric, double point, IEnumerable<string> tags)
         {
-            var dataPoints = new List<DataDogPoint>() { new DataDogPoint(point) };
+            var dataPoints = new List<DataDogPoint> { new DataDogPoint(point) };
             return await Gauge(metric, dataPoints, tags);
         }
 
@@ -32,7 +40,7 @@ namespace DataDogCSharp
 
         public async Task<HttpResponseMessage> Gauge(string metric, IEnumerable<DataDogPoint> points, IEnumerable<string> tags)
         {
-            DataDogMetric dataMetric = new DataDogMetric()
+            DataDogMetric dataMetric = new DataDogMetric
             {
                 Metric = metric,
                 Points = points,
@@ -42,7 +50,7 @@ namespace DataDogCSharp
 
             DataDogPayload payload = new DataDogPayload()
             {
-                Series = new List<DataDogMetric>() { dataMetric }
+                Series = new List<DataDogMetric> { dataMetric }
             };
 
             return await PostToDataDog(payload);
@@ -52,7 +60,7 @@ namespace DataDogCSharp
         {
             var json = JsonConvert.SerializeObject(payload);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
-            var result = await httpClient.PostAsync(apiUrl, content);
+            var result = await _httpClient.PostAsync(_apiUrl, content);
             return result;
         }
     }
